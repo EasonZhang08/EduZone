@@ -1,8 +1,37 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyBSbM6mVe5LlrDK-Vbtf_c9JkScHN-26I8",
+    authDomain: "eduzone-b89a9.firebaseapp.com",
+    projectId: "eduzone-b89a9",
+    storageBucket: "eduzone-b89a9.appspot.com",
+    messagingSenderId: "129902676930",
+    appId: "1:129902676930:web:9c78e558386340b6b4a45b",
+    measurementId: "G-83DFJ7L9Q8"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Sign up a new user
+firebase.auth().createUserWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Signed in
+    var user = userCredential.user;
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+
+// Sign in an existing user
+firebase.auth().signInWithEmailAndPassword(email, password)
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const messageInput = document.getElementById('messageInput');
     const sendButton = document.getElementById('sendButton');
-    const chatWindow = document.getElementById('chatWindow');
-
 
     function sendMessage() {
         //get the input box
