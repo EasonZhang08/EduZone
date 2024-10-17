@@ -4,11 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EduZone</title>
-
-    <!-- update the version number as needed -->
+    
+    <!-- firebase app -->
     <script defer src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
+    <!-- firebase auth -->
     <script defer src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+
+    <!-- some other firebase stuff I might need -->
     <script defer src="https://www.gstatic.com/firebasejs/10.14.0/firebase-database-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.14.0/firebase-functions-compat.js"></script>
@@ -17,16 +19,20 @@
     <script defer src="https://www.gstatic.com/firebasejs/10.14.0/firebase-analytics-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.14.0/firebase-remote-config-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/10.14.0/firebase-performance-compat.js"></script>
-    <!-- <script defer src="https://www.gstatic.com/firebasejs/firebase/init.js"></script> -->
-
-    <!-- <script defer src="https://www.gstatic.com/firebasejs/firebase/init.js?useEmulator=true"></script> -->
+    <script defer src="https://www.gstatic.com/firebasejs/firebase/init.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/firebase/init.js?useEmulator=true"></script>
+    <!-- my css file -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- fonts and firebase stuff -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <!-- my js file -->
+    <script src="script.js" defer></script>
   </head>
   <body>
     <!-- Navbar -->
@@ -40,7 +46,7 @@
       <div class="right">
         <div class="status-icon"></div>
         <button class="help-icon">?</button>
-        <button id="sign-out-button">Sign Out</button>
+        <button class="sign-out-button" id="sign-out-button">Sign Out</button>
       </div>
     </div>
     
@@ -85,9 +91,8 @@
     </div>
     
    
-    <script src="script.js"></script>
-    
     <script>
+      // These are firebase auto generated code
       document.addEventListener('DOMContentLoaded', function() {
         const loadEl = document.querySelector('#load');
         // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥

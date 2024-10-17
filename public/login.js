@@ -12,7 +12,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Get elements
+// Get elements from html
 const signUpContainer = document.getElementById('sign-up-container');
 const signInContainer = document.getElementById('sign-in-container');
 const linkToSignIn = document.getElementById('link-to-sign-in');
@@ -27,13 +27,17 @@ const signOutButton = document.getElementById('sign-out-button');
 
 // Toggle between sign-up and sign-in forms
 linkToSignIn.addEventListener('click', (e) => {
-  e.preventDefault();
+  //prevent default for submission behaviour
+  e.preventDefault(); 
+  //hidden sign up form
   signUpContainer.style.display = 'none';
+  //show sign in form
   signInContainer.style.display = 'block';
   errorMessage.textContent = '';
 });
 
 linkToSignUp.addEventListener('click', (e) => {
+  //same as the other one
   e.preventDefault();
   signInContainer.style.display = 'none';
   signUpContainer.style.display = 'block';
@@ -49,24 +53,28 @@ function isValidPassword(password) {
 // Handle Sign-Up
 signUpForm.addEventListener('submit', (e) => {
   e.preventDefault();
+
+  //get input from the text field
   const email = document.getElementById('sign-up-email').value;
   const password = document.getElementById('sign-up-password').value;
 
   // Password validation
+  //must be at least 6 characters
   if (!isValidPassword(password)) {
     errorMessage.textContent = 'Password must be at least 6 characters.';
     return;
   }
 
+  //use the firebase function to create a new user
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Send verification email
+      //TODO check if this actually works
       userCredential.user.sendEmailVerification()
         .then(() => {
+          //send a notification
           alert('Verification email sent. Please check your inbox.');
           errorMessage.textContent = "";
-          // Optionally redirect or prompt user to verify email
-          // window.location.href = 'index.html'; // Adjust if needed
         });
     })
     .catch((error) => {
@@ -79,6 +87,8 @@ signUpForm.addEventListener('submit', (e) => {
 // Handle Sign-In
 signInForm.addEventListener('submit', (e) => {
   e.preventDefault();
+
+  //same thing as the other one
   const email = document.getElementById('sign-in-email').value;
   const password = document.getElementById('sign-in-password').value;
 
@@ -90,12 +100,14 @@ signInForm.addEventListener('submit', (e) => {
         console.log('User signed in:', userCredential.user);
         window.location.href = 'index.html'; 
       } else {
+        //TODO this might not be working yet
         errorMessage.textContent = 'Please verify your email before signing in.';
         // Sign out the user
         firebase.auth().signOut();
       }
     })
     .catch((error) => {
+      //handle errors
       console.error('Error signing in:', error.message);
       if (error.code === 'auth/user-not-found') {
         errorMessage.textContent = 'No account found with this email.';
@@ -110,8 +122,10 @@ signInForm.addEventListener('submit', (e) => {
 // Handle Forgot Password
 forgotPasswordLink.addEventListener('click', (e) => {
   e.preventDefault();
+  //TODO use an actual html page instead of a prompt
   const email = prompt('Please enter your email address:');
   if (email) {
+    //send the automatic password reset email
     firebase.auth().sendPasswordResetEmail(email)
       .then(() => {
         alert('Password reset email sent!');
@@ -123,14 +137,15 @@ forgotPasswordLink.addEventListener('click', (e) => {
   }
 });
 
-
+//this runs when the user is logged in
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    console.log('User is signed in:', user);
 
+    //close the sign in and sign up page
     signInContainer.style.display = 'none';
     signUpContainer.style.display = 'none';
 
+    //show the auth message
     authMessage.style.display = 'block';
   } else {
     // No user is signed in.

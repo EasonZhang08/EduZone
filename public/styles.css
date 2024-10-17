@@ -44,6 +44,17 @@ body {
     margin-left: 10px;
 }
 
+.navbar .sign-out-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 30px;
+    background-color: #F28482;
+    border-radius: 8px;
+    margin-left: 10px;
+}
+
 /* Main layout */
 .container {
     display: flex;

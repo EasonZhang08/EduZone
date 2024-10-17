@@ -7,20 +7,25 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
     <!-- Firebase Authentication -->
     <script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-auth-compat.js"></script>
+    <!-- css -->
     <link rel="stylesheet" href="login.css">
+    <!-- js -->
     <script src="login.js" defer></script>
 
     
 </head>
 <body>
-  <!-- Sign-Up Form -->
+  <!-- Sign-Up Form (hidden initially)-->
   <div id="sign-up-container" style="display: none;">
     <h2>Sign Up</h2>
     <form id="sign-up-form">
+      <!-- the email and password inputs -->
       <input type="email" id="sign-up-email" placeholder="Email" required />
       <input type="password" id="sign-up-password" placeholder="Password" required />
+      <!-- submit button -->
       <button type="submit">Sign Up</button>
     </form>
+    <!-- link to switch to log in -->
     <p>Already have an account? <a href="#" id="link-to-sign-in">Sign in here</a></p>
   </div>
 
@@ -28,15 +33,19 @@
   <div id="sign-in-container">
     <h2>Sign In</h2>
     <form id="sign-in-form">
+      <!-- email and password inputs -->
       <input type="email" id="sign-in-email" placeholder="Email" required />
       <input type="password" id="sign-in-password" placeholder="Password" required />
+      <!-- submit button -->
       <button type="submit">Sign In</button>
     </form>
+    <!-- link to sign up -->
     <p>Don't have an account? <a href="#" id="link-to-sign-up">Sign up here</a></p>
+    <!-- link to forgot password -->
     <p><a href="#" id="forgot-password-link">Forgot your password?</a></p>
   </div>
 
-  <!-- Authenticated User Message -->
+  <!-- Authenticated User Message (this is visible after your are already signed in)-->
   <div id="auth-message" style="display: none;">
     <p>You are already signed in.</p>
     <button id="continue-button">Continue to App</button>
@@ -45,7 +54,5 @@
 
   <!-- Error Message Container -->
   <div id="error-message"></div>
-
-
 </body>
 </html> 

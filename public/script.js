@@ -1,37 +1,20 @@
-// const firebaseConfig = {
-//     apiKey: "AIzaSyBSbM6mVe5LlrDK-Vbtf_c9JkScHN-26I8",
-//     authDomain: "eduzone-b89a9.firebaseapp.com",
-//     projectId: "eduzone-b89a9",
-//     storageBucket: "eduzone-b89a9.appspot.com",
-//     messagingSenderId: "129902676930",
-//     appId: "1:129902676930:web:9c78e558386340b6b4a45b",
-//     measurementId: "G-83DFJ7L9Q8"
-// };
+const firebaseConfig = {
+    apiKey: "AIzaSyBSbM6mVe5LlrDK-Vbtf_c9JkScHN-26I8",
+    authDomain: "eduzone-b89a9.firebaseapp.com",
+    projectId: "eduzone-b89a9",
+    storageBucket: "eduzone-b89a9.appspot.com",
+    messagingSenderId: "129902676930",
+    appId: "1:129902676930:web:9c78e558386340b6b4a45b",
+    measurementId: "G-83DFJ7L9Q8"
+};
 
-// firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 const signOutButton = document.getElementById('sign-out-button');
 
-// Sign up a new user
-firebase.auth().createUserWithEmailAndPassword(email, password)
-  .then((userCredential) => {
-    // Signed in
-    var user = userCredential.user;
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  });
-
-// Sign in an existing user
-firebase.auth().signInWithEmailAndPassword(email, password)
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  });
-
 
 document.addEventListener('DOMContentLoaded', () => {
+
     const messageInput = document.getElementById('messageInput');
     const sendButton = document.getElementById('sendButton');
 
@@ -93,11 +76,21 @@ signOutButton.addEventListener('click', () => {
     firebase.auth().signOut().then(() => {
       console.log('User signed out.');
   
-      // Show the sign-in form
-      authMessage.style.display = 'none';
-      signInContainer.style.display = 'block';
+      window.location.href = 'login.html'; 
     }).catch((error) => {
       console.error('Error signing out:', error);
     });
-  });
+});
+
+//send message when the sendButton is clicked
+sendButton.addEventListener('click', () => {
+    sendMessage();
+});
+
+//send message when enter is pressed
+messageInput.addEventListener('keypress', function (event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
 
