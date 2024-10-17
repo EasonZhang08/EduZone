@@ -1,14 +1,16 @@
-const firebaseConfig = {
-    apiKey: "AIzaSyBSbM6mVe5LlrDK-Vbtf_c9JkScHN-26I8",
-    authDomain: "eduzone-b89a9.firebaseapp.com",
-    projectId: "eduzone-b89a9",
-    storageBucket: "eduzone-b89a9.appspot.com",
-    messagingSenderId: "129902676930",
-    appId: "1:129902676930:web:9c78e558386340b6b4a45b",
-    measurementId: "G-83DFJ7L9Q8"
-};
+// const firebaseConfig = {
+//     apiKey: "AIzaSyBSbM6mVe5LlrDK-Vbtf_c9JkScHN-26I8",
+//     authDomain: "eduzone-b89a9.firebaseapp.com",
+//     projectId: "eduzone-b89a9",
+//     storageBucket: "eduzone-b89a9.appspot.com",
+//     messagingSenderId: "129902676930",
+//     appId: "1:129902676930:web:9c78e558386340b6b4a45b",
+//     measurementId: "G-83DFJ7L9Q8"
+// };
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
+
+const signOutButton = document.getElementById('sign-out-button');
 
 // Sign up a new user
 firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -86,4 +88,16 @@ function selectSection(section) {
     }
 
 }
+
+signOutButton.addEventListener('click', () => {
+    firebase.auth().signOut().then(() => {
+      console.log('User signed out.');
+  
+      // Show the sign-in form
+      authMessage.style.display = 'none';
+      signInContainer.style.display = 'block';
+    }).catch((error) => {
+      console.error('Error signing out:', error);
+    });
+  });
 

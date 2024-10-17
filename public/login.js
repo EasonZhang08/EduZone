@@ -64,6 +64,7 @@ signUpForm.addEventListener('submit', (e) => {
       userCredential.user.sendEmailVerification()
         .then(() => {
           alert('Verification email sent. Please check your inbox.');
+          errorMessage.textContent = "";
           // Optionally redirect or prompt user to verify email
           // window.location.href = 'index.html'; // Adjust if needed
         });
@@ -87,7 +88,7 @@ signInForm.addEventListener('submit', (e) => {
       if (userCredential.user.emailVerified) {
         // Sign-in successful.
         console.log('User signed in:', userCredential.user);
-        window.location.href = 'index.html'; // Adjust the path if necessary
+        window.location.href = 'index.html'; 
       } else {
         errorMessage.textContent = 'Please verify your email before signing in.';
         // Sign out the user
@@ -95,7 +96,6 @@ signInForm.addEventListener('submit', (e) => {
       }
     })
     .catch((error) => {
-      // Handle Errors here.
       console.error('Error signing in:', error.message);
       if (error.code === 'auth/user-not-found') {
         errorMessage.textContent = 'No account found with this email.';
@@ -123,26 +123,22 @@ forgotPasswordLink.addEventListener('click', (e) => {
   }
 });
 
-// Monitor authentication state
+
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    // User is signed in.
     console.log('User is signed in:', user);
 
-    // Hide sign-in and sign-up forms
     signInContainer.style.display = 'none';
     signUpContainer.style.display = 'none';
 
-    // Show authenticated user message and options
     authMessage.style.display = 'block';
   } else {
     // No user is signed in.
     console.log('No user is signed in.');
 
-    // Hide authenticated user message
+
     authMessage.style.display = 'none';
 
-    // Show the sign-in form by default
     signInContainer.style.display = 'block';
     signUpContainer.style.display = 'none';
   }
@@ -150,7 +146,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
 // Continue Button
 continueButton.addEventListener('click', () => {
-  window.location.href = 'index.html'; // Adjust the path if necessary
+  window.location.href = 'index.html'; 
 });
 
 // Sign-Out Button
