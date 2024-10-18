@@ -82,6 +82,8 @@ signUpForm.addEventListener('submit', (e) => {
       console.error('Error signing up:', error.message);
       errorMessage.textContent = error.message;
     });
+
+    
 });
 
 // Handle Sign-In
@@ -175,4 +177,35 @@ signOutButton.addEventListener('click', () => {
   }).catch((error) => {
     console.error('Error signing out:', error);
   });
+});
+
+// Import necessary libraries
+const admin = require('firebase-admin');
+const functions = require('firebase-functions');
+
+// Initialize Firebase Admin SDK
+admin.initializeApp();
+
+// Get a reference to the Firestore database
+const db = admin.firestore();
+
+// Create a Cloud Function triggered by user creation
+exports.createUserFirestore = functions.auth.user().onCreate(async (user) => {
+  try {
+    // Get the user's name (you'll need to collect this during signup)
+    const userName = user.displayName || user.email; // Example: Get from user profile
+
+    // Create a document in the "users" collection
+    const userRef = db.collection('users').doc(user.uid);
+
+    // Store the user's name and other relevant data
+    await userRef.set({
+      name: userName,
+      // ... other user data
+    });
+
+    console.log('User data stored in Firestore:', user.uid);
+  } catch (error) {
+    console.error('Error storing user data:', error);
+  }
 });

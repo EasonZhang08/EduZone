@@ -14,9 +14,13 @@ const signOutButton = document.getElementById('sign-out-button');
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
     const messageInput = document.getElementById('messageInput');
     const sendButton = document.getElementById('sendButton');
+    
+
+    var displayNameOnScreen = document.getElementById('display-name');
+
+    
 
     function sendMessage() {
         //get the input box
@@ -93,4 +97,3 @@ messageInput.addEventListener('keypress', function (event) {
         sendMessage();
     }
 });
-
