@@ -1,3 +1,7 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore"; 
+
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBSbM6mVe5LlrDK-Vbtf_c9JkScHN-26I8",
@@ -10,7 +14,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
 
 // Get elements from html
 const signUpContainer = document.getElementById('sign-up-container');
@@ -51,10 +58,11 @@ function isValidPassword(password) {
 }
 
 // Handle Sign-Up
-signUpForm.addEventListener('submit', (e) => {
+signUpForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   //get input from the text field
+  const name = document.getElementById('sign-up-name').value;
   const email = document.getElementById('sign-up-email').value;
   const password = document.getElementById('sign-up-password').value;
 
@@ -70,12 +78,12 @@ signUpForm.addEventListener('submit', (e) => {
     .then((userCredential) => {
       // Send verification email
       //TODO check if this actually works
-      userCredential.user.sendEmailVerification()
-        .then(() => {
-          //send a notification
-          alert('Verification email sent. Please check your inbox.');
-          errorMessage.textContent = "";
-        });
+      return userCredential.user.sendEmailVerification()
+    })
+    .then(() => {
+      //send a notification
+      alert('Verification email sent. Please check your inbox.');
+      errorMessage.textContent = "";
     })
     .catch((error) => {
       // Handle Errors here.
@@ -83,6 +91,12 @@ signUpForm.addEventListener('submit', (e) => {
       errorMessage.textContent = error.message;
     });
 
+    // Add a new document with a generated id.
+    const docRef = await addDoc(collection(db, "users"), {
+      name: name,
+      email: email
+    });
+    console.log("Document written with ID: ", docRef.id);
     
 });
 
@@ -96,11 +110,14 @@ signInForm.addEventListener('submit', (e) => {
 
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
+      
       // Check if email is verified
       if (userCredential.user.emailVerified) {
         // Sign-in successful.
         console.log('User signed in:', userCredential.user);
         window.location.href = 'index.html'; 
+
+
       } else {
         //TODO this might not be working yet
         errorMessage.textContent = 'Please verify your email before signing in.';
@@ -179,33 +196,3 @@ signOutButton.addEventListener('click', () => {
   });
 });
 
-// Import necessary libraries
-const admin = require('firebase-admin');
-const functions = require('firebase-functions');
-
-// Initialize Firebase Admin SDK
-admin.initializeApp();
-
-// Get a reference to the Firestore database
-const db = admin.firestore();
-
-// Create a Cloud Function triggered by user creation
-exports.createUserFirestore = functions.auth.user().onCreate(async (user) => {
-  try {
-    // Get the user's name (you'll need to collect this during signup)
-    const userName = user.displayName || user.email; // Example: Get from user profile
-
-    // Create a document in the "users" collection
-    const userRef = db.collection('users').doc(user.uid);
-
-    // Store the user's name and other relevant data
-    await userRef.set({
-      name: userName,
-      // ... other user data
-    });
-
-    console.log('User data stored in Firestore:', user.uid);
-  } catch (error) {
-    console.error('Error storing user data:', error);
-  }
-});
